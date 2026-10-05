@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens INJARA / INJARA.
+ * Deux couleurs de marque (extraites du logo) + leurs dérivés :
+ *   - vert INJARA  #00BF63  → brand-*
+ *   - bleu marine  #031E40  → navy-*
+ * Tout le style passe par des classes Tailwind générées à partir de ces tokens
+ * (bg-navy-900, text-brand-700, bg-mist, text-muted…).
+ */
+@theme {
+  --font-sans: var(--font-jakarta), "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Vert INJARA. brand-700 sert au texte vert sur fond clair (contraste AA). */
+  --color-brand-50: #e8faf0;
+  --color-brand-100: #ccf2df;
+  --color-brand-300: #66d9a1;
+  --color-brand-400: #33cc82;
+  --color-brand-500: #00bf63;
+  --color-brand-600: #00a656;
+  --color-brand-700: #007a3f;
+
+  /* Bleu marine. navy-100/200 servent au texte secondaire sur fond sombre. */
+  --color-navy-50: #eef2f7;
+  --color-navy-100: #c9d3e0;
+  --color-navy-200: #9fb0c6;
+  --color-navy-600: #34527a;
+  --color-navy-700: #1b3b66;
+  --color-navy-800: #0b2a52;
+  --color-navy-900: #031e40;
+  --color-navy-950: #02152d;
+
+  /* Neutres */
+  --color-mist: #f4f7fa; /* fond des sections alternées */
+  --color-muted: #5b6b7f; /* texte secondaire */
+  --color-line: #e2e8f0; /* bordures */
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Les ancres ne passent pas sous la barre de navigation fixe. */
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    @apply bg-white font-sans text-navy-900 antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-500;
+  }
+
+  /*
+   * Intro du hero : les éléments sont masqués avant l'animation GSAP,
+   * uniquement si JavaScript est actif (classe « js » posée dans <head>).
+   * Filet de sécurité : ils réapparaissent seuls après 3 s si GSAP échoue.
+   */
+  html.js [data-hero] {
+    opacity: 0;
+    animation: hero-failsafe 0.01s linear 3s forwards;
+  }
+
+  @keyframes hero-failsafe {
+    to {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html.js [data-hero] {
+      opacity: 1;
+      animation: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+    }
+  }
+}
+
