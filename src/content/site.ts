@@ -17,7 +17,7 @@ export const company = {
   name: "INJARA",
   tagline:
     "INJARA est la solution camerounaise de recrutement intelligent : tri des CV par IA, classement par offre et entretiens vidéo sécurisés, avec des données qui restent chez vous.",
-  email: "yemelwork@gmail.com",
+  email: "team@injara.site",
   phone: "+237 696 10 10 88", // téléphone / WhatsApp
   phoneHref: "tel:+237696101088",
   whatsappHref: "https://wa.me/237696101088",
@@ -36,13 +36,14 @@ export const company = {
 
 /**
  * Adresse d'envoi du formulaire de contact.
- * → Créez un formulaire sur https://formspree.io puis définissez la variable
- *   d'environnement NEXT_PUBLIC_FORM_ENDPOINT (fichier .env.local) :
- *   NEXT_PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
- * Tant qu'elle est vide, le formulaire affiche un message invitant à écrire
- * directement par e-mail (aucune demande n'est perdue silencieusement).
+ * Par défaut, les demandes partent par FormSubmit (https://formsubmit.co)
+ * vers company.email, sans compte à créer. La toute première demande déclenche
+ * un e-mail d'activation envoyé à cette adresse : cliquez sur « Activate Form ».
+ * Pour utiliser un autre service (ex. Formspree), définissez la variable
+ * d'environnement NEXT_PUBLIC_FORM_ENDPOINT.
  */
-export const FORM_ENDPOINT = process.env.NEXT_PUBLIC_FORM_ENDPOINT ?? "";
+export const FORM_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORM_ENDPOINT || `https://formsubmit.co/ajax/${company.email}`;
 
 /* ── Navigation ─────────────────────────────────────────────────────────── */
 

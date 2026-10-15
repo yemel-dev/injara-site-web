@@ -72,9 +72,15 @@ export function ContactForm() {
 
     setStatus("sending");
     try {
-      data.set("demande", intent === "demo" ? "Demande de démo" : "Demande de devis");
+      const label = intent === "demo" ? "Demande de démo" : "Demande de devis";
+      data.set("demande", label);
+      data.set("_subject", `${label} – ${data.get("company")} (site INJARA)`);
+      data.set("_template", "table");
+      data.delete("intent");
       const res = await fetch(FORM_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } });
-      if (!res.ok) throw new Error(String(res.status));
+      // FormSubmit répond 200 avec { success: "false" } quand l'envoi est refusé.
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok || String(json.success) === "false") throw new Error(json.message ?? String(res.status));
       setStatus("success");
       form.reset();
     } catch {
@@ -210,7 +216,8 @@ export function ContactForm() {
         <textarea id="cf-message" name="message" rows={4} maxLength={2000} className={inputClass} />
       </div>
 
-      {/* Piège à robots (Formspree) : invisible pour les humains */}
+      {/* Piège à robots (_honey : FormSubmit, _gotcha : Formspree) : invisible pour les humains */}
+      <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
       <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
       <div>

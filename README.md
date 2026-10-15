@@ -17,8 +17,10 @@ npm run lint
 
 Copiez `.env.example` en `.env.local` et renseignez :
 
-- `NEXT_PUBLIC_FORM_ENDPOINT` : adresse du formulaire Formspree (ou équivalent). Tant qu'elle est vide, le formulaire
-  invite à écrire par e-mail au lieu d'envoyer la demande.
+- `NEXT_PUBLIC_FORM_ENDPOINT` (facultatif) : par défaut, les demandes sont envoyées par [FormSubmit](https://formsubmit.co)
+  à l'adresse `company.email` de `src/content/site.ts` (team@injara.site). La première demande déclenche un e-mail
+  « Activate Form » à cette adresse, sur lequel il faut cliquer une fois. Renseignez cette variable seulement pour
+  utiliser un autre service (ex. Formspree).
 - `NEXT_PUBLIC_SITE_URL` : URL publique du site (liens Open Graph absolus).
 
 ## Modifier les textes
@@ -69,7 +71,7 @@ Tout est désactivé quand le visiteur demande à réduire les animations.
 1. Poussez le projet sur GitHub, puis sur [vercel.com](https://vercel.com) : **Add New → Project** et importez le dépôt.
    Vercel détecte Next.js tout seul (build : `next build`), aucun réglage n'est nécessaire.
 2. Dans **Settings → Environment Variables**, ajoutez :
-   - `NEXT_PUBLIC_FORM_ENDPOINT` : l'adresse Formspree du formulaire de contact ;
+   - `NEXT_PUBLIC_FORM_ENDPOINT` : facultatif, seulement pour remplacer FormSubmit par un autre service ;
    - `NEXT_PUBLIC_SITE_URL` : uniquement si vous branchez un domaine personnalisé (ex. `https://injara.cm`).
      Sans elle, le site utilise automatiquement l'adresse de production Vercel pour les aperçus de partage.
 3. Redéployez après avoir ajouté les variables.

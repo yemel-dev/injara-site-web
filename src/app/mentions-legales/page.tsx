@@ -9,7 +9,7 @@ export default function MentionsLegalesPage() {
     <LegalPage title="Mentions légales">
       <h2>Éditeur du site</h2>
       <p>INJARA, [forme juridique À COMPLÉTER], Dschang, Cameroun.</p>
-      <p>Numéro d&apos;immatriculation (RCCM) : [À COMPLÉTER]. Contact : yemelwork@gmail.com · +237 696 10 10 88.</p>
+      <p>Numéro d&apos;immatriculation (RCCM) : [À COMPLÉTER]. Contact : team@injara.site · +237 696 10 10 88.</p>
       <h2>Directeur de la publication</h2>
       <p>[À COMPLÉTER]</p>
       <h2>Hébergement</h2>

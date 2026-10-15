@@ -18,9 +18,9 @@ export default function PolitiqueConfidentialitePage() {
         vendues ni cédées.
       </p>
       <h2>Prestataire d&apos;envoi</h2>
-      <p>Les formulaires sont transmis via [nom du service de formulaire, ex. Formspree, À COMPLÉTER].</p>
+      <p>Les formulaires sont transmis via le service FormSubmit (formsubmit.co).</p>
       <h2>Durée de conservation et vos droits</h2>
-      <p>[À COMPLÉTER] Pour exercer vos droits d&apos;accès, de rectification ou de suppression : yemelwork@gmail.com.</p>
+      <p>[À COMPLÉTER] Pour exercer vos droits d&apos;accès, de rectification ou de suppression : team@injara.site.</p>
       <h2>L&apos;application INJARA</h2>
       <p>
         Les données des candidats traitées par l&apos;application INJARA sont stockées localement et chiffrées sur
