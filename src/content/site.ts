@@ -36,14 +36,11 @@ export const company = {
 
 /**
  * Adresse d'envoi du formulaire de contact.
- * Par défaut, les demandes partent par FormSubmit (https://formsubmit.co)
- * vers company.email, sans compte à créer. La toute première demande déclenche
- * un e-mail d'activation envoyé à cette adresse : cliquez sur « Activate Form ».
- * Pour utiliser un autre service (ex. Formspree), définissez la variable
- * d'environnement NEXT_PUBLIC_FORM_ENDPOINT.
+ * Les demandes sont envoyées à la route /api/contact du site, qui les
+ * transmet par e-mail depuis la boîte INJARA (voir src/app/api/contact/route.ts
+ * et les variables SMTP_USER / SMTP_PASS).
  */
-export const FORM_ENDPOINT =
-  process.env.NEXT_PUBLIC_FORM_ENDPOINT || `https://formsubmit.co/ajax/${company.email}`;
+export const FORM_ENDPOINT = "/api/contact";
 
 /* ── Navigation ─────────────────────────────────────────────────────────── */
 

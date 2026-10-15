@@ -18,7 +18,7 @@ export default function PolitiqueConfidentialitePage() {
         vendues ni cédées.
       </p>
       <h2>Prestataire d&apos;envoi</h2>
-      <p>Les formulaires sont transmis via le service FormSubmit (formsubmit.co).</p>
+      <p>Les formulaires sont transmis par e-mail directement à l&apos;équipe INJARA, sans service tiers de formulaire.</p>
       <h2>Durée de conservation et vos droits</h2>
       <p>[À COMPLÉTER] Pour exercer vos droits d&apos;accès, de rectification ou de suppression : team@injara.site.</p>
       <h2>L&apos;application INJARA</h2>

@@ -7,7 +7,7 @@ import { company, contact, FORM_ENDPOINT } from "@/content/site";
 import { cn } from "@/lib/cn";
 
 type Intent = "demo" | "quote";
-type Status = "idle" | "sending" | "success" | "error" | "unconfigured";
+type Status = "idle" | "sending" | "success" | "error";
 type Errors = Partial<Record<"name" | "email" | "company" | "volume" | "consent", string>>;
 
 /* Les boutons « Demander une démo » (#demo) et « Demander un devis »
@@ -65,22 +65,13 @@ export function ContactForm() {
       form.querySelector<HTMLElement>(`[name="${firstInvalid}"]`)?.focus();
       return;
     }
-    if (!FORM_ENDPOINT) {
-      setStatus("unconfigured");
-      return;
-    }
-
     setStatus("sending");
     try {
       const label = intent === "demo" ? "Demande de démo" : "Demande de devis";
       data.set("demande", label);
-      data.set("_subject", `${label} – ${data.get("company")} (site INJARA)`);
-      data.set("_template", "table");
       data.delete("intent");
       const res = await fetch(FORM_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } });
-      // FormSubmit répond 200 avec { success: "false" } quand l'envoi est refusé.
-      const json = await res.json().catch(() => ({}));
-      if (!res.ok || String(json.success) === "false") throw new Error(json.message ?? String(res.status));
+      if (!res.ok) throw new Error(String(res.status));
       setStatus("success");
       form.reset();
     } catch {
@@ -216,9 +207,8 @@ export function ContactForm() {
         <textarea id="cf-message" name="message" rows={4} maxLength={2000} className={inputClass} />
       </div>
 
-      {/* Piège à robots (_honey : FormSubmit, _gotcha : Formspree) : invisible pour les humains */}
+      {/* Piège à robots : invisible pour les humains */}
       <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
-      <input type="text" name="_gotcha" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 
       <div>
         <label className="flex items-start gap-3 text-sm text-muted">
@@ -244,12 +234,6 @@ export function ContactForm() {
         {status === "error" && (
           <p className="rounded-xl bg-red-50 p-3 text-sm text-red-700">
             L&apos;envoi a échoué. Réessayez dans un instant ou écrivez-nous à {company.email}.
-          </p>
-        )}
-        {status === "unconfigured" && (
-          <p className="rounded-xl bg-amber-50 p-3 text-sm text-amber-800">
-            Le formulaire n&apos;est pas encore relié à une messagerie. En attendant, écrivez-nous à{" "}
-            <strong>{company.email}</strong>
           </p>
         )}
       </div>

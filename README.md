@@ -9,7 +9,7 @@ d'accueil de l'ancien frontend (`recrutement-ia/frontend`).
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # build de production (toutes les pages sont statiques)
+npm run build    # build de production (pages statiques + route /api/contact)
 npm run lint
 ```
 
@@ -17,10 +17,9 @@ npm run lint
 
 Copiez `.env.example` en `.env.local` et renseignez :
 
-- `NEXT_PUBLIC_FORM_ENDPOINT` (facultatif) : par défaut, les demandes sont envoyées par [FormSubmit](https://formsubmit.co)
-  à l'adresse `company.email` de `src/content/site.ts` (team@injara.site). La première demande déclenche un e-mail
-  « Activate Form » à cette adresse, sur lequel il faut cliquer une fois. Renseignez cette variable seulement pour
-  utiliser un autre service (ex. Formspree).
+- `SMTP_USER` / `SMTP_PASS` : adresse et mot de passe de la boîte qui envoie les demandes du formulaire de contact
+  (ex. team@injara.site, hébergée chez Spacemail). Les demandes arrivent à `company.email` de `src/content/site.ts`.
+  Facultatif : `SMTP_HOST` (mail.spacemail.com), `SMTP_PORT` (465), `CONTACT_TO` (autre destinataire).
 - `NEXT_PUBLIC_SITE_URL` : URL publique du site (liens Open Graph absolus).
 
 ## Modifier les textes
@@ -71,7 +70,7 @@ Tout est désactivé quand le visiteur demande à réduire les animations.
 1. Poussez le projet sur GitHub, puis sur [vercel.com](https://vercel.com) : **Add New → Project** et importez le dépôt.
    Vercel détecte Next.js tout seul (build : `next build`), aucun réglage n'est nécessaire.
 2. Dans **Settings → Environment Variables**, ajoutez :
-   - `NEXT_PUBLIC_FORM_ENDPOINT` : facultatif, seulement pour remplacer FormSubmit par un autre service ;
+   - `SMTP_USER` et `SMTP_PASS` : la boîte e-mail qui envoie les demandes du formulaire de contact ;
    - `NEXT_PUBLIC_SITE_URL` : uniquement si vous branchez un domaine personnalisé (ex. `https://injara.cm`).
      Sans elle, le site utilise automatiquement l'adresse de production Vercel pour les aperçus de partage.
 3. Redéployez après avoir ajouté les variables.
