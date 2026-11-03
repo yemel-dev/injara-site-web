@@ -20,7 +20,9 @@ Copiez `.env.example` en `.env.local` et renseignez :
 - `SMTP_USER` / `SMTP_PASS` : adresse et mot de passe de la boîte qui envoie les demandes du formulaire de contact
   (ex. team@injara.site, hébergée chez Spacemail). Les demandes arrivent à `company.email` de `src/content/site.ts`.
   Facultatif : `SMTP_HOST` (mail.spacemail.com), `SMTP_PORT` (465), `CONTACT_TO` (autre destinataire).
-- `NEXT_PUBLIC_SITE_URL` : URL publique du site (liens Open Graph absolus).
+- `NEXT_PUBLIC_SITE_URL` : URL publique du site (canonique, sitemap, Open Graph). Par défaut `https://injara.site`
+  en production (voir `src/lib/site-url.ts`).
+- `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` : code de vérification Google Search Console (voir « Référencement Google »).
 
 ## Modifier les textes
 
@@ -37,6 +39,7 @@ src/
 │   ├── globals.css                 # Tokens INJARA (brand-*, navy-*, mist, muted, line)
 │   ├── icon.png / apple-icon.png   # Favicon (symbole vert)
 │   ├── opengraph-image.png         # Image de partage (logo blanc sur bleu marine)
+│   ├── robots.ts / sitemap.ts      # /robots.txt et /sitemap.xml pour Google
 │   ├── mentions-legales/           # Page provisoire
 │   └── politique-de-confidentialite/
 ├── content/site.ts                 # ← TOUS les textes
@@ -71,8 +74,17 @@ Tout est désactivé quand le visiteur demande à réduire les animations.
    Vercel détecte Next.js tout seul (build : `next build`), aucun réglage n'est nécessaire.
 2. Dans **Settings → Environment Variables**, ajoutez :
    - `SMTP_USER` et `SMTP_PASS` : la boîte e-mail qui envoie les demandes du formulaire de contact ;
-   - `NEXT_PUBLIC_SITE_URL` : uniquement si vous branchez un domaine personnalisé (ex. `https://injara.cm`).
-     Sans elle, le site utilise automatiquement l'adresse de production Vercel pour les aperçus de partage.
+   - `NEXT_PUBLIC_SITE_URL` : uniquement si le domaine change (par défaut `https://injara.site`) ;
+   - `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` : le code Google Search Console (voir ci-dessous).
 3. Redéployez après avoir ajouté les variables.
 
 Le dossier `_source-webflow` est exclu des envois via `.vercelignore`.
+
+## Référencement Google
+
+1. Sur [search.google.com/search-console](https://search.google.com/search-console), **Ajouter une propriété →
+   Préfixe de l'URL** : `https://injara.site`.
+2. Méthode **Balise HTML** : copiez la valeur `content="…"`, mettez-la dans `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION`
+   sur Vercel, redéployez, puis cliquez sur **Valider**.
+3. Menu **Sitemaps** : soumettez `sitemap.xml`.
+4. **Inspection d'URL** → `https://injara.site/` → **Demander l'indexation**.
